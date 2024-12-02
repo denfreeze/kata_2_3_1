@@ -5,15 +5,15 @@ import web.model.Car;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class CarServiceImpl implements CarService {
 
     private List<Car> cars;
 
-    {
+    public CarServiceImpl() {
         cars = new ArrayList<>();
-
         cars.add(new Car("BMW", 12, "black"));
         cars.add(new Car("VOLVO", 5, "blue"));
         cars.add(new Car("JEEP", 1, "red"));
@@ -22,10 +22,7 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public List<Car> index(int count) {
-        if (count >= cars.size()) {
-            return new ArrayList<>(cars);
-        }
-        return new ArrayList<>(cars.subList(0, count));
+    public List<Car> getCars(int count) {
+        return cars.stream().limit(count).collect(Collectors.toList());
     }
 }
